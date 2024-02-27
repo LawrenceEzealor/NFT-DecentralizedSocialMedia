@@ -9,7 +9,7 @@ contract SocialMedia {
         uint256 followersCount;
         uint256 followingCount;
         uint256 walletBalance;
-        bool exists;
+        bool hasSignedUp;
         uint256 postCount;
         uint256 createdAt;
     }
@@ -63,7 +63,7 @@ contract SocialMedia {
     }
 
     function registerUser(string memory _username) external {
-        require(!users[msg.sender].exists, "User already registered");
+        require(!users[msg.sender].hasSignedUp, "User already registered");
         users[msg.sender] = User(_username, 0, 0, 0, true, 0, block.timestamp);
         emit hasRegistered(msg.sender, _username, block.timestamp);
     }
@@ -72,7 +72,7 @@ contract SocialMedia {
         string memory _description,
         string calldata _tokenUri
     ) external {
-        require(users[msg.sender].exists, "Unauthorized");
+        require(users[msg.sender].hasSignedUp, "Unauthorized");
         require(bytes(_tokenUri).length >= 8, "URI is short");
 
         nftCollection.mintNft(_tokenUri, msg.sender);
@@ -94,7 +94,7 @@ contract SocialMedia {
     }
 
     function toggleLike(uint256 _postId) external {
-        require(users[msg.sender].exists, "you are not authorized");
+        require(users[msg.sender].hasSignedUp, "you are not authorized");
         require(posts[_postId].createdAt != 0, "Post not found");
 
         if (!postLikes[_postId][msg.sender]) {
@@ -109,7 +109,7 @@ contract SocialMedia {
     }
 
     function addComment(uint256 _postId, string calldata _content) external {
-        require(users[msg.sender].exists, "you are not authorized");
+        require(users[msg.sender].hasSignedUp, "you are not authorized");
         require(posts[_postId].createdAt != 0, "Post not found");
 
         uint256 commentCount = posts[_postId].commentCount;
@@ -124,8 +124,8 @@ contract SocialMedia {
     }
 
     function toggleFollow(address _user) external {
-        require(users[msg.sender].exists, "you are not authorized");
-        require(users[_user].exists, "User not found");
+        require(users[msg.sender].hasSignedUp, "you are not authorized");
+        require(users[_user].hasSignedUp, "User not found");
 
         if (followers[_user][msg.sender]) {
             followers[_user][msg.sender] = false;
@@ -141,7 +141,7 @@ contract SocialMedia {
     }
 
     function deletePost(uint256 _postId) external {
-        require(users[msg.sender].exists, "you are not authorized");
+        require(users[msg.sender].hasSignedUp, "you are not authorized");
         require(posts[_postId].createdAt != 0, "Post not found");
         require(posts[_postId].author == msg.sender, "Unauthorized");
 

@@ -38,13 +38,14 @@ contract SocialMedia {
     uint256 public postCounter;
     NFT public nftCollection;
 
-    event UserRegistered(address indexed user, string username, uint256 time);
+    event hasRegistered(address indexed user, string username, uint256 time);
     event PostCreated(
         address indexed user,
         uint256 indexed postId,
         uint256 indexed tokenId,
         address tokenAddress
     );
+
     event PostLiked(address indexed user, uint256 postId);
     event PostUnliked(address indexed user, uint256 postId);
     event UserFollowed(address indexed follower, address indexed followed);
@@ -64,7 +65,7 @@ contract SocialMedia {
     function registerUser(string memory _username) external {
         require(!users[msg.sender].exists, "User already registered");
         users[msg.sender] = User(_username, 0, 0, 0, true, 0, block.timestamp);
-        emit UserRegistered(msg.sender, _username, block.timestamp);
+        emit hasRegistered(msg.sender, _username, block.timestamp);
     }
 
     function createPost(
@@ -72,7 +73,7 @@ contract SocialMedia {
         string calldata _tokenUri
     ) external {
         require(users[msg.sender].exists, "Unauthorized");
-        require(bytes(_tokenUri).length >= 8, "URI too short");
+        require(bytes(_tokenUri).length >= 8, "URI is short");
 
         nftCollection.mintNft(_tokenUri, msg.sender);
         posts[postCounter] = Post(

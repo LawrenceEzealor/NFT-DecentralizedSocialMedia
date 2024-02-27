@@ -94,7 +94,7 @@ contract SocialMedia {
     }
 
     function toggleLike(uint256 _postId) external {
-        require(users[msg.sender].exists, "Unauthorized");
+        require(users[msg.sender].exists, "you are not authorized");
         require(posts[_postId].createdAt != 0, "Post not found");
 
         if (!postLikes[_postId][msg.sender]) {
@@ -141,7 +141,7 @@ contract SocialMedia {
     }
 
     function deletePost(uint256 _postId) external {
-        require(users[msg.sender].exists, "Unauthorized");
+        require(users[msg.sender].exists, "you are not authorized");
         require(posts[_postId].createdAt != 0, "Post not found");
         require(posts[_postId].author == msg.sender, "Unauthorized");
 

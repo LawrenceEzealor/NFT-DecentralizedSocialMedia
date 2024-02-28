@@ -27,6 +27,13 @@ module.exports = {
     //   accounts: [ACCOUNT_PRIVATE_KEY],
     // }
   },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  //   apiKey:{
+  //   polygonMumbai: POLYGONSCAN_API_KEY,
+  // }
+},
+  
   lockGasLimit: 200000000000,
   gasPrice: 10000000000,
 };

@@ -7,12 +7,12 @@ async function main() {
 
   await socialMedia.waitForDeployment();
 
-   const nft = await ethers.deployContract("NFT", [""]);
+  //  const nft = await ethers.deployContract("NFT", ["LAWRENCE", "LAW"]);
 
-  await nft.waitForDeployment();
+  // await nft.waitForDeployment();
 
   console.log(
-    `NFT with deployed to ${nft.target}`
+    `SocialMedia with deployed to ${socialMedia.target}`
   );
 }
 

@@ -72,7 +72,7 @@ contract SocialMedia {
         string memory _description,
         string calldata _tokenUri
     ) external {
-        require(users[msg.sender].hasSignedUp, "Unauthorized");
+        require(users[msg.sender].hasSignedUp, "you are not authorized");
         require(bytes(_tokenUri).length >= 8, "URI is short");
 
         nftCollection.mintNft(_tokenUri, msg.sender);
